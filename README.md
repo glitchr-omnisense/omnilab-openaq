@@ -7,7 +7,7 @@
 > See [Verified, and not](docs/index.md#verified-and-not).
 
 Air quality measurements of [OpenAQ](https://openaq.org) for
-[glitchr/omnilab](https://github.com/glitchr-studio/omnilab), through its API v3: the hourly or
+[omniscient/omnilab](https://github.com/glitchr-studio/omnilab), through its API v3: the hourly or
 daily averages of a pollutant - PM2.5, PM10, NO2, O3, SO2, CO, black carbon... by OpenAQ's
 parameter names - at the nearest location of a point that measures it, from the reference
 monitors of governments and the low-cost sensors that OpenAQ gathers the world over.
