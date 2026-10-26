@@ -7,7 +7,7 @@
 > See [Verified, and not](docs/index.md#verified-and-not).
 
 Air quality measurements of [OpenAQ](https://openaq.org) for
-[omniscient/omnilab](https://github.com/glitchr-studio/omnilab), through its API v3: the hourly or
+[omnisense/omnilab](https://github.com/glitchr-omnisense/omnilab), through its API v3: the hourly or
 daily averages of a pollutant - PM2.5, PM10, NO2, O3, SO2, CO, black carbon... by OpenAQ's
 parameter names - at the nearest location of a point that measures it, from the reference
 monitors of governments and the low-cost sensors that OpenAQ gathers the world over.
@@ -30,8 +30,8 @@ omnilab:
                 radius_km: 10                    # how far from a Point a location is looked for (25 at most)
 ```
 
-Air quality from models, without a key, is [omnilab/open-meteo](https://github.com/glitchr-studio/omnilab-open-meteo)
-(`api: air_quality`) and [omnilab/cams](https://github.com/glitchr-studio/omnilab-cams).
+Air quality from models, without a key, is [omnilab/open-meteo](https://github.com/glitchr-omnisense/omnilab-open-meteo)
+(`api: air_quality`) and [omnilab/cams](https://github.com/glitchr-omnisense/omnilab-cams).
 
 See [docs/](docs/index.md) for what is read, how it maps, and what the API does not give here.
 
