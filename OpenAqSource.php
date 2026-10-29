@@ -69,7 +69,8 @@ final class OpenAqSource extends HttpSource
      * configured radius: SeriesQuery::HOURLY, the hourly averages (a point
      * at each hour's start), or DAILY, the daily averages OpenAQ computes in
      * the location's local days. The unit is the sensor's (µg/m³, ppm...).
-     * A variable no location near measures: no series for it. The period
+     * A variable no location near measures: a series without points, at
+     * the point asked. The period
      * defaults to the last seven days; a date without a time is the whole
      * day.
      */
@@ -99,6 +100,8 @@ final class OpenAqSource extends HttpSource
         foreach ($query->variables as $variable) {
             $found = self::nearest($locations, $query->place, strtolower($variable));
             if (null === $found) {
+                // No location near measures it: a series without points, in its place in the list.
+                $series[] = new Series($variable, null, $query->place, [], $query->step, Series::MEAN, null, false, 'openaq');
                 continue;
             }
             [$location, $sensor] = $found;

@@ -65,13 +65,6 @@ The factory's options, with the defaults it applies (`OpenAqSourceFactory`):
 | `station` | no | a station's identifier is refused (the core has no scheme for OpenAQ's locations) |
 | `cloud_cover` | no |  |
 
-> [!WARNING]
-> Known defect: a variable that no location within the radius measures is left out of the answer
-> (`OpenAqSource::series()`), where the contract gives one series per variable asked, in the
-> order asked (a series without points for one unknown). The list may be shorter than the
-> variables, and `[$pm25, $no2] = $openaq->series(...)` then gives the wrong series: read each
-> series' `variable`.
-
 ## Which API
 
 OpenAQ's API v3 (`https://api.openaq.org/v3/`, OpenAPI 3.0.0 on 2026-10-16), the key in the
@@ -92,7 +85,8 @@ bad parameter; their `message` (or `detail`) is said.
 A **series** (`Capability::SERIES`, `HISTORICAL`): at a `Point`, for each variable asked, the
 nearest location within `radius_km` that has a sensor of that parameter (by its `distance`, or the
 great circle when the API gives none), then that sensor's averages. A variable no location near
-measures gives no series (the list may be shorter than the variables asked). The variables are
+measures gives a series without points, at the point asked: one series per variable asked, in
+the order asked. The variables are
 OpenAQ's parameter names: `pm25`, `pm10`, `pm1`, `no2`, `no`, `nox`, `o3`, `so2`, `co`, `bc`,
 `temperature`, `relativehumidity`... and the unit the sensor's (`µg/m³`, `ppm`...: OpenAQ keeps
 each provider's). `SeriesQuery::HOURLY` gives a point at each hour's start (the period's

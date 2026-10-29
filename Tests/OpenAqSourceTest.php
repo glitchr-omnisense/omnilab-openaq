@@ -67,9 +67,11 @@ final class OpenAqSourceTest extends TestCase
     {
         $series = $this->source()->series(new SeriesQuery(['pm25', 'bc'], new Point(35.1353, -106.5847), new \DateTimeImmutable('2024-09-25'), new \DateTimeImmutable('2024-09-25')));
 
-        // Del Norte has no black carbon sensor: no series for it.
-        self::assertCount(1, $series);
-        [$pm25] = $series;
+        // Del Norte has no black carbon sensor: a series without points for it, in its place.
+        self::assertCount(2, $series);
+        [$pm25, $bc] = $series;
+        self::assertSame(['bc', null, [], SeriesQuery::HOURLY, 'openaq'], [$bc->variable, $bc->unit, $bc->points, $bc->step, $bc->source]);
+        self::assertEquals(new Point(35.1353, -106.5847), $bc->place, 'the point asked');
         self::assertSame(['pm25', 'µg/m³', SeriesQuery::HOURLY, Series::MEAN, false, 'openaq'], [$pm25->variable, $pm25->unit, $pm25->step, $pm25->aggregation, $pm25->forecast, $pm25->source]);
         self::assertSame('Del Norte (OpenAQ location 2178, sensor 3920, AirNow)', $pm25->label);
         self::assertEquals(new Point(35.1353, -106.584702), $pm25->place);
