@@ -45,6 +45,17 @@ excesses can suspend it: the source waits a second between two calls. OpenAQ's t
 location's licence (the API gives it, `licenses`, with its attribution). Do not leave requests
 running once the data are no longer needed.
 
+## Usage policy
+
+Declared as data in [`policy.json`](policy.json) (read at https://docs.openaq.org/using-the-api/rate-limits on 2026-11-10), and honoured on every request by the
+core: a limit reached waits when its window ends within `max_wait` seconds, else the request is not
+sent ([Usage policies](https://github.com/glitchr-omnisense/omnilab/blob/1.x/docs/policies.md)).
+
+- Limits: 60 a minute per key; 2,000 a hour per key.
+- Licence: not stated; commercial use: unknown.
+- Credit: required: OpenAQ (https://openaq.org).
+- Needs: a key.
+
 ## Responsibility
 
 This package is an independent, unofficial client: it is not affiliated with, endorsed by or

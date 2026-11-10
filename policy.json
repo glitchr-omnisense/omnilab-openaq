@@ -1,0 +1,55 @@
+{
+    "$schema": "https://github.com/glitchr-omnisense/contracts/blob/1.x/resources/usage-policy.schema.json",
+    "provider": "openaq",
+    "rateLimits": [
+        {
+            "max": 60,
+            "window": "minute",
+            "scope": "key",
+            "operations": [],
+            "note": "Free tier, per API key; custom use: higher limits by agreement. 429 on excess; repeated excess can bring a temporary or permanent ban."
+        },
+        {
+            "max": 2000,
+            "window": "hour",
+            "scope": "key",
+            "operations": [],
+            "note": "Free tier, per API key."
+        }
+    ],
+    "concurrency": null,
+    "rights": {
+        "commercial": "unknown",
+        "openSourceRequired": null,
+        "caching": {
+            "permission": "unknown",
+            "maxTtl": null
+        },
+        "storage": "unknown",
+        "redistribution": "unknown",
+        "attribution": {
+            "required": true,
+            "text": "OpenAQ",
+            "url": "https://openaq.org",
+            "where": [
+                "source"
+            ]
+        },
+        "licence": null
+    },
+    "requirements": {
+        "key": true,
+        "userAgent": {
+            "required": false,
+            "pattern": null
+        }
+    },
+    "provenance": {
+        "terms": "https://docs.openaq.org/about/terms",
+        "policy": "https://docs.openaq.org/using-the-api/rate-limits",
+        "verifiedAt": "2026-11-10",
+        "declaredBy": "maintainer",
+        "contact": null,
+        "notes": "Rate limits read on docs.openaq.org (2026-11-10): 60/minute and 2,000/hour per user API key (free tier), headers x-ratelimit-used/-limit/-remaining/-reset, 429 on excess. Terms: an account and API key are required (key not transferable); attribution to OpenAQ as source required, and to the underlying providers (each location's licence, given by the API); higher-rate access under a paid API Licence and Services Agreement; the hosted API may not be used to build products that substantially duplicate or compete with OpenAQ; bulk downloading prohibited unless through registered, authorized use; do not leave requests running once data are no longer needed. Data licence varies per provider: licence null, commercial/storage/redistribution unknown. No published contact for API matters (DMCA policy only). No concurrency figure."
+    }
+}
