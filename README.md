@@ -35,6 +35,49 @@ Air quality from models, without a key, is [omnilab/open-meteo](https://github.c
 
 See [docs/](docs/index.md) for what is read, how it maps, and what the API does not give here.
 
+## Install and a first call
+
+```sh
+composer require omnilab/openaq
+```
+
+OpenAQ's API v3 requires a key (free, with an account at explore.openaq.org). This first call needs
+none: an hour of PM2.5 at Albuquerque's Del Norte station, its two answers taken from OpenAQ's
+documented examples (trimmed), so nothing leaves the process (Symfony's `MockHttpClient` answers in
+place of the service). A real call gives the factory no client (it makes its own) and the source
+`['api_key' => getenv('OPENAQ_API_KEY')]`.
+
+```php
+<?php
+
+require __DIR__.'/vendor/autoload.php';
+
+use Omnilab\Model\Point;
+use Omnilab\OpenAq\OpenAqSourceFactory;
+use Omnilab\Source\SeriesQuery;
+use Symfony\Component\HttpClient\MockHttpClient;
+use Symfony\Component\HttpClient\Response\MockResponse;
+
+// The service's answer, recorded: no account, and nothing leaves the process.
+$http = new MockHttpClient([
+    new MockResponse('{"meta": {"found": 1}, "results": [{"id": 2178, "name": "Del Norte", "locality": "Albuquerque", "timezone": "America/Denver",
+        "provider": {"id": 119, "name": "AirNow"}, "sensors": [{"id": 3920, "name": "pm25 µg/m³", "parameter": {"id": 2, "name": "pm25", "units": "µg/m³"}}],
+        "coordinates": {"latitude": 35.1353, "longitude": -106.584702}, "distance": 120.5}]}'),
+    new MockResponse('{"meta": {"found": 1}, "results": [{"value": 4.4, "parameter": {"id": 2, "name": "pm25", "units": "µg/m³"},
+        "period": {"label": "1hour", "datetimeFrom": {"utc": "2024-09-25T21:00:00Z"}, "datetimeTo": {"utc": "2024-09-25T22:00:00Z"}}}]}'),
+]);
+$openaq = (new OpenAqSourceFactory($http))->create(['api_key' => 'not-a-key']);
+$day = new DateTimeImmutable('2024-09-25');
+[$pm25] = $openaq->series(new SeriesQuery(['pm25'], new Point(35.1353, -106.5847), $day, $day));
+echo $pm25->label, ': ', implode(' ', $pm25->values()), ' ', $pm25->unit, "\n";
+```
+
+Its output:
+
+```
+Del Norte (OpenAQ location 2178, sensor 3920, AirNow): 4.4 µg/m³
+```
+
 ## Terms of use
 
 OpenAQ's API needs a key, which its user obtains by registering at
